@@ -1,0 +1,26 @@
+if (!require("tidyverse", quietly = TRUE))
+    install.packages("tidyverse")
+
+args = commandArgs(trailingOnly = TRUE)
+
+folder   <- args[1]
+filename <- args[2]
+
+setwd(folder)
+
+contigs <- read_delim(filename, 
+                      delim = "\t", escape_double = FALSE, 
+                      trim_ws = TRUE)
+
+contigs <- contigs %>% 
+  mutate(Prediction = case_when(
+    Eukaryote > EukaryoteVirus & Eukaryote > Plasmid & Eukaryote > Prokaryote & Eukaryote > ProkaryoteVirus ~ "Eukaryote",
+    EukaryoteVirus > Eukaryote & EukaryoteVirus > Plasmid & EukaryoteVirus > Prokaryote & EukaryoteVirus > ProkaryoteVirus ~ "EukaryoteVirus",
+    Plasmid > Eukaryote & Plasmid > EukaryoteVirus & Plasmid > Prokaryote & Plasmid > ProkaryoteVirus ~ "Plasmid",
+    Prokaryote > Eukaryote & Prokaryote > EukaryoteVirus & Prokaryote > Plasmid & Prokaryote > ProkaryoteVirus ~ "Prokaryote",
+    ProkaryoteVirus > Eukaryote & ProkaryoteVirus > EukaryoteVirus & ProkaryoteVirus > Plasmid & ProkaryoteVirus > Prokaryote ~ "ProkaryoteVirus"
+  ))
+contigs %>% group_by(Prediction) %>% 
+  summarise(nContigs = n(), fracContigs = nContigs/nrow(contigs))
+
+write_delim(contigs, filename, delim = "\t")
