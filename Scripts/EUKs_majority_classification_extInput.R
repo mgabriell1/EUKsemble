@@ -39,9 +39,9 @@ kaiju_class <- read_delim(kaiju_classFile, delim = "\t", escape_double = FALSE, 
 
 ##### KMER MAJORITY CLASSIFICATION #####
 
-contigs_class <- deepmicrobefinder_class %>% select(ContigID, DeepMicrobeFinder_class) %>% right_join(contigs_class)
-contigs_class <- tiara_class %>% select(ContigID, Tiara_class) %>% right_join(contigs_class)
-contigs_class <- whokaryote_class %>% select(ContigID, Whokaryote_class) %>% right_join(contigs_class)
+contigs_class <- deepmicrobefinder_class %>% select(ContigID, DeepMicrobeFinder_class) %>% right_join(contigs_class, by = "ContigID")
+contigs_class <- tiara_class %>% select(ContigID, Tiara_class) %>% right_join(contigs_class, by = "ContigID")
+contigs_class <- whokaryote_class %>% select(ContigID, Whokaryote_class) %>% right_join(contigs_class, by = "ContigID")
 
 contigs_class <- contigs_class %>% mutate( 
   MajorityKmer_Nclassifications = (as.numeric(!is.na(DeepMicrobeFinder_class)) + as.numeric(!is.na(Tiara_class)) + as.numeric(!is.na(Whokaryote_class))),
@@ -53,7 +53,7 @@ contigs_class <- contigs_class %>% mutate(
 
 ##### KAIJU CLASSIFICATION #####
 
-contigs_class <- kaiju_class %>% select(ContigID, Kaiju_class) %>% right_join(contigs_class)
+contigs_class <- kaiju_class %>% select(ContigID, Kaiju_class) %>% right_join(contigs_class, by = "ContigID")
 contigs_class <- contigs_class %>% 
   mutate(MajorityKmer_Kaiju_class = ifelse(is.na(Kaiju_class), MajorityKmer_class, Kaiju_class))
 write_delim(contigs_class, paste0(out_folder, results_filename, "_EUKs_Classification_details_Kmer_min",kmer_minLength,"kbp_Kaiju_min",kaiju_minLength,"kbp.tsv"), delim = "\t")

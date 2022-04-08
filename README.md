@@ -18,6 +18,6 @@ Beware that Taxonomizr will require to download a large database on its first us
 ## Usage
 1. Specify all variables including assembly name and location, minimum size required for Kaiju's and k-mer eukaryotic classification and the details regarding the location of the dependencies in `EUKs_classification_pipeline-CONFIG.conf`. \
 Caveats:
-    - This file needs to be in the same directory as the other pipeline scripts
     - Folder names have to end with `/`
-3. Then execute `EUKs_classification_pipeline.sh`
+    - Minimum contigs sizes are intended as kbp (e.g. `3 == 3000`)
+3. Then execute `./EUKs_classification_pipeline.sh EUKs_classification_pipeline-CONFIG.conf`

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###### READ CONFIGURATION #####
-source $(dirname $(readlink -f $0))"/EUKs_classification_pipeline-CONFIG.conf"
+source $1
 
 
 ######################################################################################
@@ -38,7 +38,7 @@ printf "Whokaryote classification \n"
 if [ ! -d $FOLDER$RESULTS_FOLDER"whokaryote-results_min"$MINSIZE_CONTIGS_KMERCLASS"kbp" ]; then
     whokaryote.py --contigs $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"kbp"$FILE_EXT  \
         --outdir $FOLDER$RESULTS_FOLDER"whokaryote-results_min"$MINSIZE_CONTIGS_KMERCLASS"kbp" \
-        --minsize 1000 --f 
+        --minsize ${MINSIZE_CONTIGS_KMERCLASS}000 --f 
 else
     printf "Whokaryote classification already present. Skipped \n"
 fi
@@ -51,7 +51,7 @@ if [ ! -f $FOLDER$RESULTS_FOLDER"tiara-results_min"$MINSIZE_CONTIGS_KMERCLASS"kb
     tiara -i $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"kbp"$FILE_EXT  \
         --to_fasta class all --threads 4 --probabilities --verbose \
         -p 0.65 0.65 \
-        -m 1000 \
+        -m ${MINSIZE_CONTIGS_KMERCLASS}000 \
         --output $FOLDER$RESULTS_FOLDER"tiara-results_min"$MINSIZE_CONTIGS_KMERCLASS"kbp/tiara-out_classification.txt"
 else
     printf "Tiara classification already present. Skipped \n"
