@@ -3,6 +3,8 @@
 ###### READ CONFIGURATION #####
 source $1
 
+let MINSIZE_CONTIGS_KMERCLASS_bp=MINSIZE_CONTIGS_KMERCLASS*1000
+let MINSIZE_CONTIGS_KAIJUCLASS_bp=MINSIZE_CONTIGS_KAIJUCLASS*1000
 
 ######################################################################################
 eval "$(conda shell.bash hook)"
@@ -14,11 +16,11 @@ mkdir -p $FOLDER$RESULTS_FOLDER
 if [ ! -f $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"kbp"$FILE_EXT ] && [ ! -f $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KAIJUCLASS"kbp"$FILE_EXT ]; then
     printf "Prepare files for classification \n"
     conda activate $SEQKIT_ENV
-    seqkit seq $FOLDER$DATA$FILE_EXT -m $MINSIZE_CONTIGS_KMERCLASS"000" -o $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"kbp"$FILE_EXT 
+    seqkit seq $FOLDER$DATA$FILE_EXT -m $MINSIZE_CONTIGS_KMERCLASS_bp -o $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"kbp"$FILE_EXT 
     grep ">" $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"kbp"$FILE_EXT | awk 'sub(/^>/, "")'  > $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"kbp_contigsIDs.txt"
 
     if [ $MINSIZE_CONTIGS_KMERCLASS != $MINSIZE_CONTIGS_KAIJUCLASS ]; then
-        seqkit seq $FOLDER$DATA$FILE_EXT -m $MINSIZE_CONTIGS_KAIJUCLASS"000" -o $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KAIJUCLASS"kbp"$FILE_EXT
+        seqkit seq $FOLDER$DATA$FILE_EXT -m $MINSIZE_CONTIGS_KAIJUCLASS_bp -o $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KAIJUCLASS"kbp"$FILE_EXT
         grep ">" $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KAIJUCLASS"kbp"$FILE_EXT | awk 'sub(/^>/, "")'  > $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KAIJUCLASS"kbp_contigsIDs.txt"
     fi
     
@@ -38,7 +40,7 @@ printf "Whokaryote classification \n"
 if [ ! -d $FOLDER$RESULTS_FOLDER"whokaryote-results_min"$MINSIZE_CONTIGS_KMERCLASS"kbp" ]; then
     whokaryote.py --contigs $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"kbp"$FILE_EXT  \
         --outdir $FOLDER$RESULTS_FOLDER"whokaryote-results_min"$MINSIZE_CONTIGS_KMERCLASS"kbp" \
-        --minsize ${MINSIZE_CONTIGS_KMERCLASS}000 --f 
+        --minsize $MINSIZE_CONTIGS_KMERCLASS_bp --f 
 else
     printf "Whokaryote classification already present. Skipped \n"
 fi
@@ -51,7 +53,7 @@ if [ ! -f $FOLDER$RESULTS_FOLDER"tiara-results_min"$MINSIZE_CONTIGS_KMERCLASS"kb
     tiara -i $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"kbp"$FILE_EXT  \
         --to_fasta class all --threads 4 --probabilities --verbose \
         -p 0.65 0.65 \
-        -m ${MINSIZE_CONTIGS_KMERCLASS}000 \
+        -m $MINSIZE_CONTIGS_KMERCLASS_bp \
         --output $FOLDER$RESULTS_FOLDER"tiara-results_min"$MINSIZE_CONTIGS_KMERCLASS"kbp/tiara-out_classification.txt"
 else
     printf "Tiara classification already present. Skipped \n"
