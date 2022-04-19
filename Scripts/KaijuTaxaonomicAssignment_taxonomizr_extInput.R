@@ -30,7 +30,7 @@ for (filename in filenames){
   
   kaiju_out_taxa <- left_join(kaiju_out, kaiju_outC, by = c("ContigID" = "ContigID", "row" = "row")) %>% select(-row)
   
-  filename_out <- paste(folder,filename,"_min",minContig_size,"kbp_taxa",ext,sep="")
+  filename_out <- paste(folder,filename,"_min",minContig_size,"bp_taxa",ext,sep="")
   write_tsv(kaiju_out_taxa,filename_out)
   cat(" and written with taxa \n")
   

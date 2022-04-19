@@ -56,7 +56,7 @@ contigs_class <- contigs_class %>% mutate(
 contigs_class <- kaiju_class %>% select(ContigID, Kaiju_class) %>% right_join(contigs_class, by = "ContigID")
 contigs_class <- contigs_class %>% 
   mutate(MajorityKmer_Kaiju_class = ifelse(is.na(Kaiju_class), MajorityKmer_class, Kaiju_class))
-write_delim(contigs_class, paste0(out_folder, results_filename, "_EUKs_Classification_details_Kmer_min",kmer_minLength,"kbp_Kaiju_min",kaiju_minLength,"kbp.tsv"), delim = "\t")
+write_delim(contigs_class, paste0(out_folder, results_filename, "_EUKs_Classification_details_Kmer_min",kmer_minLength,"bp_Kaiju_min",kaiju_minLength,"bp.tsv"), delim = "\t")
 
 EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_Kaiju_class == "EUK") %>% select(ContigID)
-write_delim(EUKs_ContigID, paste0(out_folder, results_filename, "_EUKs_contigsIDs_Kmer_min",kmer_minLength,"kbp_Kaiju_min",kaiju_minLength,"kbp.txt"), col_names = FALSE)
+write_delim(EUKs_ContigID, paste0(out_folder, results_filename, "_EUKs_contigsIDs_Kmer_min",kmer_minLength,"bp_Kaiju_min",kaiju_minLength,"bp.txt"), col_names = FALSE)
