@@ -1,5 +1,9 @@
-if (!require("tidyverse", quietly = TRUE))
-    install.packages("tidyverse")
+if (!require("readr", quietly = TRUE))
+    install.packages("readr")
+if (!require("dplyr", quietly = TRUE))
+    install.packages("dplyr")
+if (!require("tidyr", quietly = TRUE))
+    install.packages("tidyr")
 if (!require("taxonomizr", quietly = TRUE))
     install.packages("taxonomizr")
 
@@ -30,7 +34,7 @@ for (filename in filenames){
   
   kaiju_out_taxa <- left_join(kaiju_out, kaiju_outC, by = c("ContigID" = "ContigID", "row" = "row")) %>% select(-row)
   
-  filename_out <- paste(folder,filename,"_min",minContig_size,"bp_taxa",ext,sep="")
+  filename_out <- paste(folder,filename,".taxa",ext,sep="")
   write_tsv(kaiju_out_taxa,filename_out)
   cat(" and written with taxa \n")
   

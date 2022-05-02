@@ -1,5 +1,7 @@
-if (!require("tidyverse", quietly = TRUE))
-    install.packages("tidyverse")
+if (!require("dplyr", quietly = TRUE))
+    install.packages("dplyr")
+if (!require("readr", quietly = TRUE))
+    install.packages("readr")
 
 args = commandArgs(trailingOnly = TRUE)
 
@@ -20,7 +22,7 @@ contigs <- contigs %>%
     Prokaryote > Eukaryote & Prokaryote > EukaryoteVirus & Prokaryote > Plasmid & Prokaryote > ProkaryoteVirus ~ "Prokaryote",
     ProkaryoteVirus > Eukaryote & ProkaryoteVirus > EukaryoteVirus & ProkaryoteVirus > Plasmid & ProkaryoteVirus > Prokaryote ~ "ProkaryoteVirus"
   ))
-contigs %>% group_by(Prediction) %>% 
-  summarise(nContigs = n(), fracContigs = nContigs/nrow(contigs))
+#contigs %>% group_by(Prediction) %>% 
+#  summarise(nContigs = n(), fracContigs = nContigs/nrow(contigs))
 
 write_delim(contigs, filename, delim = "\t")

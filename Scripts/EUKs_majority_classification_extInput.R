@@ -1,5 +1,11 @@
-if (!require("tidyverse", quietly = TRUE))
-    install.packages("tidyverse")
+if (!require("dplyr", quietly = TRUE))
+    install.packages("dplyr")
+if (!require("readr", quietly = TRUE))
+    install.packages("readr")
+if (!require("stringr", quietly = TRUE))
+    install.packages("stringr")
+if (!require("tidyr", quietly = TRUE))
+    install.packages("tidyr")
 
 args = commandArgs(trailingOnly = TRUE)
 
@@ -11,6 +17,8 @@ kaiju_classFile <- args[5]
 out_folder <- args[6]
 kmer_minLength<- args[7]
 kaiju_minLength <- args[8]
+include_na <- args[9]
+kaiju_local <- args[10]
 
 results_filename <- sub("*.*/", "", contigs_classFile)
 results_filename <- sub("_min.*", "", results_filename)
@@ -32,9 +40,16 @@ deepmicrobefinder_class <- read_delim(deepmicrobefinder_classFile, "\t", escape_
   rename(ContigID = 'Sequence Name', DeepMicrobeFinder_class = Prediction) %>%
   mutate(DeepMicrobeFinder_class = ifelse(DeepMicrobeFinder_class == "Eukaryote", "EUK", "OTHER"))
 
-kaiju_class <- read_delim(kaiju_classFile, delim = "\t", escape_double = FALSE, col_names = TRUE, trim_ws = TRUE) %>%
-  rename(Kaiju_class = 'superkingdom') %>%
-  mutate(Kaiju_class  = ifelse(Kaiju_class  == "Eukaryota", "EUK", "OTHER"))
+if (kaiju_local == "TRUE"){
+	kaiju_class <- read_delim(kaiju_classFile, delim = "\t", col_names = FALSE) %>%
+		rename(ContigID = X2) %>%
+		mutate(Kaiju_class = ifelse(str_detect(X8, "Eukaryota"), "EUK", "OTHER"))
+}else{
+	kaiju_class <- read_delim(kaiju_classFile, delim = "\t", escape_double = FALSE, col_names = TRUE, trim_ws = TRUE) %>%
+  		rename(Kaiju_class = 'superkingdom') %>%
+  		mutate(Kaiju_class  = ifelse(Kaiju_class  == "Eukaryota", "EUK", "OTHER"))
+}
+
 
 
 ##### KMER MAJORITY CLASSIFICATION #####
@@ -58,5 +73,12 @@ contigs_class <- contigs_class %>%
   mutate(MajorityKmer_Kaiju_class = ifelse(is.na(Kaiju_class), MajorityKmer_class, Kaiju_class))
 write_delim(contigs_class, paste0(out_folder, results_filename, "_EUKs_Classification_details_Kmer_min",kmer_minLength,"bp_Kaiju_min",kaiju_minLength,"bp.tsv"), delim = "\t")
 
-EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_Kaiju_class == "EUK") %>% select(ContigID)
-write_delim(EUKs_ContigID, paste0(out_folder, results_filename, "_EUKs_contigsIDs_Kmer_min",kmer_minLength,"bp_Kaiju_min",kaiju_minLength,"bp.txt"), col_names = FALSE)
+if (include_na == "TRUE"){
+	EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_Kaiju_class != "OTHER") %>% select(ContigID)
+	write_delim(EUKs_ContigID, paste0(out_folder, results_filename, "_EUKs_NAs_contigsIDs_Kmer_min",kmer_minLength,"bp_Kaiju_min",kaiju_minLength,"bp.txt"), col_names = FALSE)
+} else if (include_na == "FALSE") {
+	EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_Kaiju_class == "EUK") %>% select(ContigID)
+	write_delim(EUKs_ContigID, paste0(out_folder, results_filename, "_EUKs_contigsIDs_Kmer_min",kmer_minLength,"bp_Kaiju_min",kaiju_minLength,"bp.txt"), col_names = FALSE)
+} else {
+	fprintf("Specify if the output should include only the detected eukaryotes or also all the not classified contigs\n")
+}
