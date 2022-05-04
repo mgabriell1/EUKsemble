@@ -30,8 +30,8 @@ if [ ! -f $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_E
     fi
 fi
 
-%printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-printf "==============================================="
+#printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+printf "===============================================\n"
 
 ###### KAIJU CLASSIFICATIONS #####
 
@@ -56,8 +56,8 @@ if [ $KAIJU_LOCAL == "TRUE" ]; then
 	fi
 fi
 
-%printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-printf "==============================================="
+#printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+printf "===============================================\n"
 
 ###### K-MER CLASSIFICATIONS #####
 
@@ -71,8 +71,8 @@ if [ ! -d $FOLDER$RESULTS_FOLDER"whokaryote-results_min"$MINSIZE_CONTIGS_KMERCLA
 else
     printf "Whokaryote classification already present. Skipped \n"
 fi
-%printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-printf "==============================================="
+#printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+printf "===============================================\n"
 
 conda activate $TIARA_ENV 
 
@@ -87,8 +87,8 @@ else
     printf "Tiara classification already present. Skipped \n"
 fi
     
-%printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-printf "==============================================="
+#printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+printf "===============================================\n"
 
 conda activate $DEEPMICROBEFINDER_ENV #Definition from DeepMicrobeFinder github
 
@@ -106,8 +106,8 @@ else
     printf "DeepMicrobeFinder classification already present. Skipped \n"
 fi
 
-%printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-printf "==============================================="
+#printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+printf "===============================================\n"
 
 ##### ASSIGN TAXONOMY TO KAIJU WEBSERVER RESULTS #####
 if [ $KAIJU_LOCAL != "TRUE" ]; then
@@ -120,7 +120,7 @@ if [ $KAIJU_LOCAL != "TRUE" ]; then
 	    $ACCESSIONTAXADB_TAXONOMIZR
 	
 	%printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-	printf "==============================================="
+	printf "===============================================\n"
 fi 
 ##### PERFORM CLASSIFICATION #####
 
@@ -137,8 +137,8 @@ $RSCRIPT_PATH Scripts/EUKs_majority_classification_extInput.R \
     $INCLUDE_NA \
     $KAIJU_LOCAL
 
-%printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-printf "==============================================="
+#printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+printf "===============================================\n"
 
 ##### EXTRACT EUKARYOTIC CONTIGS #####
 
