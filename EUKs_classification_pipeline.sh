@@ -80,7 +80,7 @@ printf "Tiara classification \n"
 if [ ! -f $FOLDER$RESULTS_FOLDER"tiara-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp/tiara-out_classification.txt" ]; then
     tiara -i $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT  \
         --to_fasta class all --threads $THREADS --probabilities --verbose \
-        -p 0.65 0.65 \
+        -p $TIARA_FIRST_CLASS $TIARA_SECOND_CLASS \
         -m $MINSIZE_CONTIGS_KMERCLASS \
         --output $FOLDER$RESULTS_FOLDER"tiara-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp/tiara-out_classification.txt"
 else
