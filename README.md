@@ -1,5 +1,5 @@
-# EUK_classification_pipeline
-Scripts for identification of eukaryotic contigs in metagenomic assemblies.
+# EUKsemble
+Pipeline for identification of eukaryotic contigs in metagenomic assemblies.
 This pipeline can run on a desktop computer if Kaiju's predictions are performed on the available webserver. Otherwise around 175GB of RAM are required for this step.
 In case the prediction is carried out on the webserver the pipeline has to be run twice: once, to prepare the files, and then after obtaining the contigs predictions provided by Kaiju's webserver. 
 
@@ -25,4 +25,5 @@ Beware that Taxonomizr will require to download a large database on its first us
 Caveats:
     - Folder names have to end with `/`
     - Minimum contigs sizes are intended as bp
+    - Minimum contig length for k-mer-based classification must be equal or greater than Kaiju's one
 2. Then execute `./EUKs_classification_pipeline.sh EUKs_classification_pipeline-CONFIG.conf`
