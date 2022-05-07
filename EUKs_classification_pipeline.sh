@@ -101,7 +101,7 @@ if [ ! -d $FOLDER$RESULTS_FOLDER"deepmicrobefinder-results_min"$MINSIZE_CONTIGS_
         -m hybrid \
         -o $FOLDER$RESULTS_FOLDER"deepmicrobefinder-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp"
         
-    $RSCRIPT_PATH Scripts/DeepMicrobeFinder_predictionAssignment_extInput.R $FOLDER$RESULTS_FOLDER"deepmicrobefinder-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp" $DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT"_pred_one-hot_hybrid.txt"
+    $RSCRIPT_PATH $EUK_PIPELINE_INSTALLATION_FOLDER/Scripts/DeepMicrobeFinder_predictionAssignment_extInput.R $FOLDER$RESULTS_FOLDER"deepmicrobefinder-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp" $DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT"_pred_one-hot_hybrid.txt"
 else
     printf "DeepMicrobeFinder classification already present. Skipped \n"
 fi
@@ -112,7 +112,7 @@ printf "===============================================\n"
 ##### ASSIGN TAXONOMY TO KAIJU WEBSERVER RESULTS #####
 if [ $KAIJU_LOCAL != "TRUE" ]; then
 	printf "Assign taxonomy from Kaiju webserver results \n"
-	$RSCRIPT_PATH Scripts/KaijuTaxaonomicAssignment_taxonomizr_extInput.R \
+	$RSCRIPT_PATH $EUK_PIPELINE_INSTALLATION_FOLDER/Scripts/KaijuTaxaonomicAssignment_taxonomizr_extInput.R \
 	    $KAIJURESULTS_FOLDER \
 	    $KAIJURESULTS_FILENAME \
 	    $KAIJURESULTS_EXT \
@@ -125,7 +125,7 @@ fi
 ##### PERFORM CLASSIFICATION #####
 
 printf "Perform majority classification \n"
-$RSCRIPT_PATH Scripts/EUKs_majority_classification_extInput.R \
+$RSCRIPT_PATH $EUK_PIPELINE_INSTALLATION_FOLDER/Scripts/EUKs_majority_classification_extInput.R \
     $FOLDER$RESULTS_FOLDER$DATA"_min"$MINSIZE_CONTIGS_KAIJUCLASS"bp_contigsIDs.txt" \
     $FOLDER$RESULTS_FOLDER"whokaryote-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp/featuretable_predictions_T.tsv" \
     $FOLDER$RESULTS_FOLDER"tiara-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp/tiara-out_classification.txt" \
