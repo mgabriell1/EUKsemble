@@ -1,7 +1,7 @@
 # EUKsemble
-Pipeline for identification of eukaryotic contigs in metagenomic assemblies.
+Pipeline for identification of eukaryotic contigs in metagenomic assemblies. Best performances are obtained by using an ensemble approach of different k-mer classifiers and a reference-based one.  
+
 This pipeline can run on a desktop computer if Kaiju's predictions are performed on the available webserver. Otherwise around 175GB of RAM are required for this step.
-In case the prediction is carried out on the webserver the pipeline has to be run twice: once, to prepare the files, and then after obtaining the contigs predictions provided by Kaiju's webserver. 
 
 ## Requirements
 The following dependencies environments are required (the user can specify the name of a conda environment name for each tool):
@@ -27,3 +27,13 @@ Caveats:
     - Minimum contigs sizes are intended as bp
     - Minimum contig length for k-mer-based classification must be equal or greater than Kaiju's one
 2. Then execute `./EUKs_classification_pipeline.sh EUKs_classification_pipeline-CONFIG.conf`
+
+N.B.: In case the prediction is carried out on the webserver the pipeline has to be run twice: once, to prepare the files, and then after obtaining the contigs predictions provided by Kaiju's webserver. 
+
+## Citation
+Paper in progress. 
+For now: "EUKsemble, ensemble strategy for eukaryotic retrieval in metagenomes, Gabrielli and Pinto, 2022".
+Also: do not forget to cite the software that made this pipeline possible (look at the requirements)
+
+If you have found this pipeline useful let us know!
+
