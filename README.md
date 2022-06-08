@@ -28,6 +28,7 @@ Caveats:
     - Minimum contig length for k-mer-based classification must be equal or greater than Kaiju's one
 2. Then execute `./EUKs_classification_pipeline.sh EUKs_classification_pipeline-CONFIG.conf`
 
+By default the results are saved in a subfolder next to the classified assembly called `{Assembly name}_EUK_classification/`, where `{Assembly name}` is the name of the assembly to be classified. This behaviour can be changed in the `OTHER PARAMETERS` section of the config file.
 N.B.: In case the prediction is carried out on the webserver the pipeline has to be run twice: once, to prepare the files, and then after obtaining the contigs predictions provided by Kaiju's webserver. 
 
 ## Citation
