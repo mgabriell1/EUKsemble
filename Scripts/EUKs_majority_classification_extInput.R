@@ -35,7 +35,7 @@ whokaryote_class <- read_delim(whokaryote_classFile, "\t", escape_double = FALSE
   mutate(Whokaryote_class  = ifelse(Whokaryote_class  == "eukaryote", "EUK", "OTHER"))
 tiara_class <- read_delim(tiara_classFile, "\t", escape_double = FALSE, trim_ws = TRUE) %>%
   rename(ContigID = 'sequence_id', Tiara_class = class_fst_stage) %>%
-  mutate(Tiara_class = ifelse(Tiara_class == "eukarya", "EUK", "OTHER"))
+  mutate(Tiara_class = ifelse(Tiara_class %in% c("eukarya","organelle"), "EUK", "OTHER"))
 deepmicrobefinder_class <- read_delim(deepmicrobefinder_classFile, "\t", escape_double = FALSE, trim_ws = TRUE) %>%
   rename(ContigID = 'Sequence Name', DeepMicrobeFinder_class = Prediction) %>%
   mutate(DeepMicrobeFinder_class = ifelse(DeepMicrobeFinder_class == "Eukaryote", "EUK", "OTHER"))
