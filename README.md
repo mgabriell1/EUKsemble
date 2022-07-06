@@ -21,7 +21,7 @@ The R scripts used will automatically install (if not present) the packages used
 Beware that Taxonomizr will require to download a large database on its first usage
 
 ## Important parameters and usage 
-# Most imprtant parameters
+### Most important parameters
 To use `EUKsemble` these are the parameters to be changed: 
 - Details on assembly to be classified:
 	- `FOLDER`: folder contaning the contigs file
@@ -33,7 +33,7 @@ The minimum length can be different between the strategy to exploit the higher c
 Our benchmark shows that while the vast majority of prokaryotic contigs at 1 kbp are classified by Kaiju, only about half of the eukaryotic ones are, meaning that the non-classified contigs might include a large fractino of eukaryotic contigs. 
 - Paths to conda environments and binaries
 
-# Usage
+### Usage
 1. Specify all variables including assembly name and location, minimum size required for Kaiju's and k-mer eukaryotic classification and the details regarding the location of the dependencies in `EUKs_classification_pipeline-CONFIG.conf`. \
 2. Then execute `./EUKs_classification_pipeline.sh EUKs_classification_pipeline-CONFIG.conf`
 
