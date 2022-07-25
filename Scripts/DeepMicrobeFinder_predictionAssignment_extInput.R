@@ -25,4 +25,6 @@ contigs <- contigs %>%
 #contigs %>% group_by(Prediction) %>% 
 #  summarise(nContigs = n(), fracContigs = nContigs/nrow(contigs))
 
-write_delim(contigs, filename, delim = "\t")
+filename_class <- substr(filename,1,nchar(filename)-4)
+
+write_delim(contigs, paste0(filename_class,".class.txt"), delim = "\t")
