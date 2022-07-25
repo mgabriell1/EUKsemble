@@ -10,6 +10,7 @@ The following dependencies environments are required (the user can specify the n
 - Whokaryote (https://github.com/LottePronk/whokaryote#installation)
 - DeepMicrobeFinder (https://github.com/chengsly/DeepMicrobeFinder#installation)
 - R
+
 And depending on which reference-based classifier is chosen:
 - Kaiju (https://github.com/bioinformatics-centre/kaiju, either locally or using the webserver results)
 - CAT (https://github.com/dutilh/CAT#installation)
@@ -41,6 +42,7 @@ Our benchmark shows that while the vast majority of prokaryotic contigs at 1 kbp
 2. Then execute `./EUKsemble.sh EUKsemble-CONFIG.conf`
 
 By default the results are saved in a subfolder next to the classified assembly called `{Assembly name}_EUK_classification/`, where `{Assembly name}` is the name of the assembly to be classified. This behaviour can be changed in the `OTHER PARAMETERS REGARDING OUTPUT AND CLASSIFIERS` section of the config file.
+
 N.B.: In case the prediction is carried out on Kaiju's webserver the pipeline has to be run twice: once, to prepare the files, and then after obtaining the contigs predictions provided by the webserver. 
 
 ## Output
@@ -55,8 +57,11 @@ For a normal usage the final result is included in the column `MajorityKmer_{kai
 
 ## Citation
 Paper in progress. 
+
 For now: "EUKsemble, an ensemble strategy for eukaryotic retrieval in metagenomes, Gabrielli and Pinto, 2022".
+
 Also: do not forget to cite the software that made this pipeline possible (look at the requirements)
+
 
 If you have found this pipeline useful let us know!
 
