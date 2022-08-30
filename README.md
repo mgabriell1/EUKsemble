@@ -55,7 +55,7 @@ By default `EUKsemble` will create a folder alongside the file containing the cl
 - One tabular file with the classification results of all the tools on each contig named `DATA.Classification_details_Kmer_minXXXXbp_{kaiju/CAT}_minYYYYbp.tsv` (`DATA` depends on the input provided as well as the minimum contig lengths). This file will contain 9 columns containing the contig ID, the classification by all the tools, the number of k-mer-based classification and the fraction of EUK votes and the majority voting result (either with or without including the reference-based method selected).
 For a normal usage the final result is included in the column `MajorityKmer_{kaiju/CAT}_class` which indicates the classification based on Kaiju or CAT and k-mer-based majority voting.
 - A text file containing the list of contigs selected as eukaryotic (including `NA` if specified). The file name is `DATA.EUK_contigsIDs_Kmer_minXXXXbp_{KAIJU/CAT}_minYYYYbp.txt` (in case `NA` are included the filename will include `EUK_NA`).
-- A fasta file containg the contigs classified as eukaryotic (including `NA` if specified). The file name is `DATA.EUK_Kmer_minXXXXbp_{KAIJU/CAT}_minYYYYbp.txt` (in case `NA` are included the filename will include `EUK_NA`).
+- A fasta file containg the contigs classified as eukaryotic (including `NA` if specified). The file name is `DATA.EUK_Kmer_minXXXXbp_{KAIJU/CAT}_minYYYYbp.fasta` (in case `NA` are included the filename will include `EUK_NA`).
 
 
 ## Citation

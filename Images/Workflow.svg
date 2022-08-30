@@ -9,6 +9,9 @@
    id="svg5"
    inkscape:version="1.2 (1:1.2.1+202207142221+cd75a1ee6d)"
    sodipodi:docname="Workflow.svg"
+   inkscape:export-filename="Workflow.jpg"
+   inkscape:export-xdpi="600"
+   inkscape:export-ydpi="600"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,8 +30,8 @@
      showguides="true"
      inkscape:lockguides="false"
      inkscape:zoom="0.52787981"
-     inkscape:cx="561.68088"
-     inkscape:cy="533.26532"
+     inkscape:cx="93.771345"
+     inkscape:cy="555.99777"
      inkscape:window-width="1920"
      inkscape:window-height="1015"
      inkscape:window-x="1280"
@@ -320,12 +323,26 @@
        rx="23.595125"
        ry="8.2579908" />
     <ellipse
-       style="fill:#c9ffde;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:#c9ffde;fill-opacity:1;stroke:#000000;stroke-width:0.901472;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="path236-2"
-       cx="131.83134"
-       cy="263.33432"
-       rx="21.251736"
-       ry="7.3626614" />
+       cx="105"
+       cy="271.51257"
+       rx="21.175999"
+       ry="10.674989" />
+    <ellipse
+       style="fill:#c9ffde;fill-opacity:1;stroke:#000000;stroke-width:0.901472;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path236-2-5"
+       cx="54.723007"
+       cy="271.51257"
+       rx="21.175999"
+       ry="10.674989" />
+    <ellipse
+       style="fill:#c9ffde;fill-opacity:1;stroke:#000000;stroke-width:0.901472;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path236-2-9"
+       cx="155.27699"
+       cy="271.51257"
+       rx="21.175999"
+       ry="10.674989" />
     <rect
        style="fill:#fffae8;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="rect1784"
@@ -394,42 +411,56 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0.132292px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="131.89645"
-       y="262.34833"
+       x="105.55708"
+       y="268.44714"
        id="text2010-7"><tspan
          sodipodi:role="line"
-         id="tspan2008-2"
          style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="131.89645"
-         y="262.34833">Output</tspan><tspan
+         x="105.55708"
+         y="268.44714"
+         id="tspan2062-26">Output contigs</tspan><tspan
          sodipodi:role="line"
          style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="131.89645"
-         y="266.58167"
-         id="tspan2062-26">contigs (fasta)</tspan></text>
-    <ellipse
-       style="fill:#c9ffde;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-       id="path236-2-1"
-       cx="77.924103"
-       cy="263.33432"
-       rx="21.251736"
-       ry="7.3626614" />
+         x="105.55708"
+         y="272.68048"
+         id="tspan7936">(eukaryotic and </tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="105.55708"
+         y="276.91382"
+         id="tspan7942">eventually NA)</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0.132292px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="77.922035"
-       y="262.38553"
+       x="54.72094"
+       y="270.56378"
        id="text2010-7-0"><tspan
          sodipodi:role="line"
          style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="77.922035"
-         y="262.38553"
+         x="54.72094"
+         y="270.56378"
          id="tspan2062-26-1">Classification </tspan><tspan
          sodipodi:role="line"
          style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="77.922035"
-         y="266.61887"
+         x="54.72094"
+         y="274.79712"
          id="tspan6152">summary table</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0.132292px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="155.80823"
+       y="270.56378"
+       id="text2010-7-0-4"><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="155.80823"
+         y="270.56378"
+         id="tspan6152-0">List of output </tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="155.80823"
+         y="274.79712"
+         id="tspan8015">contig IDs</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.88056px;line-height:1;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0.132292px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -793,13 +824,7 @@
        xml:space="preserve"
        transform="scale(0.26458333)"
        id="text6078"
-       style="fill:black;fill-opacity:1;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:18.66666667px;line-height:0;letter-spacing:83.83000183px;word-spacing:15.39999962px;white-space:pre;shape-inside:url(#rect6080)" />
-    <circle
-       id="path6154"
-       style="fill:#000000;stroke:none;stroke-width:0.264583"
-       cx="77.924103"
-       cy="255.97166"
-       r="0.39687499" />
+       style="font-style:normal;font-weight:normal;font-size:18.6667px;line-height:0;font-family:sans-serif;letter-spacing:83.83px;word-spacing:15.4px;white-space:pre;shape-inside:url(#rect6080);display:inline;fill:#000000;fill-opacity:1;stroke:none" />
     <path
        style="fill:none;stroke:#575757;stroke-width:7.165;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker6166)"
        d="m 105,232.27759 v 16.68288"
