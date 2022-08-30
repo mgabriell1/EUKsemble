@@ -3,6 +3,9 @@ Pipeline for identification of eukaryotic contigs in metagenomic assemblies. Bes
 
 This pipeline can run on a desktop computer if Kaiju's predictions are performed on the available webserver. Otherwise around 175GB of RAM are required for this step.
 
+A schematic representation of the steps followed by EUKsemble is present below.
+![alt text](./Images/Workflow.jpg?raw=true) 
+
 ## Requirements
 The following dependencies environments are required (the user can specify the name of a conda environment name for each tool):
 - Seqkit (https://bioinf.shenwei.me/seqkit/)
