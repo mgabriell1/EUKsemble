@@ -1,10 +1,12 @@
+<p align="center"><img src="./Images/EUKsemble_logo.png" height="250"/></p>
+
 # EUKsemble
 Pipeline for identification of eukaryotic contigs in metagenomic assemblies. Best performances are obtained by using an ensemble approach of different k-mer classifiers and a reference-based one.  
 
 This pipeline can run on a desktop computer if Kaiju's predictions are performed on the available webserver. Otherwise around 175GB of RAM are required for this step.
 
-A schematic representation of the steps followed by EUKsemble is present below.
-![alt text](./Images/Workflow.jpg?raw=true) 
+A schematic representation of the steps followed by EUKsemble is present below. 
+<p align="center"><img src="./Images/Workflow.jpg" width="640"/></p>
 
 ## Requirements
 The following dependencies environments are required (the user can specify the name of a conda environment name for each tool):
@@ -67,4 +69,6 @@ Also: do not forget to cite the software that made this pipeline possible (look 
 
 
 If you have found this pipeline useful let us know!
+
+P.S.: Thanks to DALL-E (https://labs.openai.com/) for helping with the logo design!
 
