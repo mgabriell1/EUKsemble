@@ -62,8 +62,11 @@ For a normal usage the final result is included in the column `MajorityKmer_{kai
 
 ## Citation
 Identifying eukaryotes in drinking water metagenomes and factors influencing their biogeography
+
 Marco Gabrielli, Zihan Dai, Vincent Delafont, Peer Timmers, Paul van der Wielen, Manuela Antonelli, Ameet Pinto
+
 bioRxiv 2022.11.29.518372; doi: https://doi.org/10.1101/2022.11.29.518372 
+
 
 Also: do not forget to cite the software that made this pipeline possible (look at the requirements).
 
