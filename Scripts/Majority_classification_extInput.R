@@ -1,10 +1,10 @@
-if (!require("dplyr", quietly = TRUE))
+if (!suppressPackageStartupMessages(require("dplyr", quietly = TRUE)))
     install.packages("dplyr")
-if (!require("readr", quietly = TRUE))
+if (!suppressPackageStartupMessages(require("readr", quietly = TRUE)))
     install.packages("readr")
-if (!require("stringr", quietly = TRUE))
+if (!suppressPackageStartupMessages(require("stringr", quietly = TRUE)))
     install.packages("stringr")
-if (!require("tidyr", quietly = TRUE))
+if (!suppressPackageStartupMessages(require("tidyr", quietly = TRUE)))
     install.packages("tidyr")
 
 args = commandArgs(trailingOnly = TRUE)
@@ -27,35 +27,41 @@ results_filename <- sub("_min.*", "", results_filename)
 
 ##### LOAD CONTIGS IDS #####
 
-contigs_class <- read_tsv(contigs_classFile, col_names = FALSE) %>% rename(ContigID = X1)
-
+contigs_class <- read_tsv(contigs_classFile, col_names = FALSE, show_col_types = FALSE) %>% rename(ContigID = X1)
+cat("Contigs IDs loaded\n")
 
 ##### LOAD CLASSIFICATION RESULTS #####
 
-whokaryote_class <- read_delim(whokaryote_classFile, "\t", escape_double = FALSE, trim_ws = TRUE) %>%
+whokaryote_class <- read_delim(whokaryote_classFile, "\t", escape_double = FALSE, trim_ws = TRUE, show_col_types = FALSE) %>%
   rename(ContigID = 'contig', Whokaryote_class = predicted) %>%
   mutate(Whokaryote_class  = ifelse(Whokaryote_class  == "eukaryote", "EUK", "OTHER"))
-tiara_class <- read_delim(tiara_classFile, "\t", escape_double = FALSE, trim_ws = TRUE) %>%
+cat("Whokaryote classification loaded\n")
+tiara_class <- read_delim(tiara_classFile, "\t", escape_double = FALSE, trim_ws = TRUE, show_col_types = FALSE) %>%
   rename(ContigID = 'sequence_id', Tiara_class = class_fst_stage) %>%
   mutate(Tiara_class = ifelse(Tiara_class %in% c("eukarya","organelle"), "EUK", "OTHER"))
-deepmicrobefinder_class <- read_delim(deepmicrobefinder_classFile, "\t", escape_double = FALSE, trim_ws = TRUE) %>%
+cat("Tiara classification loaded\n")
+deepmicrobefinder_class <- read_delim(deepmicrobefinder_classFile, "\t", escape_double = FALSE, trim_ws = TRUE, show_col_types = FALSE) %>%
   rename(ContigID = 'Sequence Name', DeepMicrobeFinder_class = Prediction) %>%
   mutate(DeepMicrobeFinder_class = ifelse(DeepMicrobeFinder_class == "Eukaryote", "EUK", "OTHER"))
+cat("Deepmicrobefinder classification loaded\n")
 
 if (tolower(refdb_classifier) == "kaiju"){
 	if (kaiju_local == "TRUE"){
-	kaiju_class <- read_delim(kaiju_classFile, delim = "\t", col_names = FALSE) %>%
+	kaiju_class <- read_delim(kaiju_classFile, delim = "\t", col_names = FALSE, show_col_types = FALSE) %>%
 		rename(ContigID = X2) %>%
 		mutate(Kaiju_class = ifelse(str_detect(X8, "Eukaryota"), "EUK", "OTHER"))
+    cat("Kaiju local classification loaded\n")
 	} else{
-		kaiju_class <- read_delim(kaiju_classFile, delim = "\t", escape_double = FALSE, col_names = TRUE, trim_ws = TRUE) %>%
+		kaiju_class <- read_delim(kaiju_classFile, delim = "\t", escape_double = FALSE, col_names = TRUE, trim_ws = TRUE, show_col_types = FALSE) %>%
 	  		rename(Kaiju_class = 'superkingdom') %>%
 	  		mutate(Kaiju_class  = ifelse(Kaiju_class  == "Eukaryota", "EUK", "OTHER"))
+        cat("Kaiju webserver classification loaded\n")
 	}
 } else if (tolower(refdb_classifier) == "cat"){
-	cat_class <- read_delim(cat_classFile, delim = "\t", col_names = TRUE) %>%
+	cat_class <- read_delim(cat_classFile, delim = "\t", col_names = TRUE, show_col_types = FALSE) %>%
 		rename(ContigID = `# contig`) %>%
 		mutate(CAT_class = ifelse(str_detect(superkingdom, "Eukaryota"), "EUK", "OTHER")) 
+    cat("CAT classification loaded\n")
 }
 
 
@@ -89,7 +95,7 @@ if (tolower(refdb_classifier) == "kaiju"){
 		EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_Kaiju_class == "EUK") %>% select(ContigID)
 		write_delim(EUKs_ContigID, paste0(out_folder, results_filename, ".EUK_contigsIDs_KmerMajority_min",kmer_minLength,"bp_KAIJU_min",refdb_minLength,"bp.txt"), col_names = FALSE)
 	} else {
-		fprintf("Specify if the output should include only the detected eukaryotes or also all the not classified contigs\n")
+		cat("Specify if the output should include only the detected eukaryotes or also all the not classified contigs\n")
 	}
 } else if (tolower(refdb_classifier) == "cat"){
 	contigs_class <- cat_class %>% select(ContigID, CAT_class) %>% right_join(contigs_class, by = "ContigID")
@@ -104,6 +110,6 @@ if (tolower(refdb_classifier) == "kaiju"){
 		EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_CAT_class == "EUK") %>% select(ContigID)
 		write_delim(EUKs_ContigID, paste0(out_folder, results_filename, ".EUK_contigsIDs_KmerMajority_min",kmer_minLength,"bp_CAT_min",refdb_minLength,"bp.txt"), col_names = FALSE)
 	} else {
-		fprintf("Specify if the output should include only the detected eukaryotes or also all the not classified contigs\n")
+		cat("Specify if the output should include only the detected eukaryotes or also all the not classified contigs\n")
 	}
 }

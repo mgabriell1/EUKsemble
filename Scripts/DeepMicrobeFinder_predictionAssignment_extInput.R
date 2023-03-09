@@ -1,6 +1,6 @@
-if (!require("dplyr", quietly = TRUE))
+if (!suppressPackageStartupMessages(require("dplyr", quietly = TRUE)))
     install.packages("dplyr")
-if (!require("readr", quietly = TRUE))
+if (!suppressPackageStartupMessages(require("readr", quietly = TRUE)))
     install.packages("readr")
 
 args = commandArgs(trailingOnly = TRUE)
@@ -12,7 +12,8 @@ setwd(folder)
 
 contigs <- read_delim(filename, 
                       delim = "\t", escape_double = FALSE, 
-                      trim_ws = TRUE)
+                      trim_ws = TRUE, show_col_types = FALSE)
+cat("Deepmicrobefinder scores loaded \n")
 
 contigs <- contigs %>% 
   mutate(Prediction = case_when(
