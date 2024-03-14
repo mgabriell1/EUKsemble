@@ -12,7 +12,7 @@ args = commandArgs(trailingOnly = TRUE)
 contigs_classFile <- args[1]
 whokaryote_classFile <- args[2]
 tiara_classFile <- args[3]
-deepmicrobefinder_classFile <- args[4]
+deepmicroclass_classFile <- args[4]
 kaiju_classFile <- args[5]
 cat_classFile <- args[6]
 out_folder <- args[7]
@@ -40,10 +40,10 @@ tiara_class <- read_delim(tiara_classFile, "\t", escape_double = FALSE, trim_ws 
   rename(ContigID = 'sequence_id', Tiara_class = class_fst_stage) %>%
   mutate(Tiara_class = ifelse(Tiara_class %in% c("eukarya","organelle"), "EUK", "OTHER"))
 cat("Tiara classification loaded\n")
-deepmicrobefinder_class <- read_delim(deepmicrobefinder_classFile, "\t", escape_double = FALSE, trim_ws = TRUE, show_col_types = FALSE) %>%
-  rename(ContigID = 'Sequence Name', DeepMicrobeFinder_class = Prediction) %>%
-  mutate(DeepMicrobeFinder_class = ifelse(DeepMicrobeFinder_class == "Eukaryote", "EUK", "OTHER"))
-cat("Deepmicrobefinder classification loaded\n")
+deepmicroclass_class <- read_delim(deepmicroclass_classFile, "\t", escape_double = FALSE, trim_ws = TRUE, show_col_types = FALSE) %>%
+  rename(ContigID = 'Sequence Name', DeepMicroClass_class = Prediction) %>%
+  mutate(DeepMicroClass_class = ifelse(DeepMicroClass_class == "Eukaryote", "EUK", "OTHER"))
+cat("DeepMicroClass classification loaded\n")
 
 if (tolower(refdb_classifier) == "kaiju"){
 	if (kaiju_local == "TRUE"){
@@ -68,13 +68,13 @@ if (tolower(refdb_classifier) == "kaiju"){
 
 ##### KMER MAJORITY CLASSIFICATION #####
 
-contigs_class <- deepmicrobefinder_class %>% select(ContigID, DeepMicrobeFinder_class) %>% right_join(contigs_class, by = "ContigID")
+contigs_class <- deepmicroclass_class %>% select(ContigID, DeepMicroClass_class) %>% right_join(contigs_class, by = "ContigID")
 contigs_class <- tiara_class %>% select(ContigID, Tiara_class) %>% right_join(contigs_class, by = "ContigID")
 contigs_class <- whokaryote_class %>% select(ContigID, Whokaryote_class) %>% right_join(contigs_class, by = "ContigID")
 
 contigs_class <- contigs_class %>% mutate( 
-  MajorityKmer_Nclassifications = (as.numeric(!is.na(DeepMicrobeFinder_class)) + as.numeric(!is.na(Tiara_class)) + as.numeric(!is.na(Whokaryote_class))),
-  MajorityKmer_votesFrac = (str_detect(replace_na(DeepMicrobeFinder_class, ''),"EUK") + 
+  MajorityKmer_Nclassifications = (as.numeric(!is.na(DeepMicroClass_class)) + as.numeric(!is.na(Tiara_class)) + as.numeric(!is.na(Whokaryote_class))),
+  MajorityKmer_votesFrac = (str_detect(replace_na(DeepMicroClass_class, ''),"EUK") + 
                                   str_detect(replace_na(Tiara_class, ''),"EUK") +  
                                   str_detect(replace_na(Whokaryote_class, ''),"EUK"))/MajorityKmer_Nclassifications,
   MajorityKmer_class = ifelse(MajorityKmer_votesFrac > 0.5, "EUK", "OTHER")) 
@@ -89,7 +89,7 @@ if (tolower(refdb_classifier) == "kaiju"){
 	write_delim(contigs_class, paste0(out_folder, results_filename, ".Classification_details_KmerMajority_min",kmer_minLength,"bp_KAIJU_min",refdb_minLength,"bp.tsv"), delim = "\t")
 	
 	if (tolower(include_na) == "true"){
-		EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_Kaiju_class != "OTHER") %>% select(ContigID)
+		EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_Kaiju_class %in% c("EUK", NA)) %>% select(ContigID)
 		write_delim(EUKs_ContigID, paste0(out_folder, results_filename, ".EUK_NA_contigsIDs_KmerMajority_min",kmer_minLength,"bp_KAIJU_min",refdb_minLength,"bp.txt"), col_names = FALSE)
 	} else if (tolower(include_na) == "false") {
 		EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_Kaiju_class == "EUK") %>% select(ContigID)
@@ -104,7 +104,7 @@ if (tolower(refdb_classifier) == "kaiju"){
 	write_delim(contigs_class, paste0(out_folder, results_filename, ".Classification_details_KmerMajority_min",kmer_minLength,"bp_CAT_min",refdb_minLength,"bp.tsv"), delim = "\t")
 	
 	if (tolower(include_na) == "true"){
-		EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_CAT_class != "OTHER") %>% select(ContigID)
+		EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_CAT_class %in% c("EUK", NA)) %>% select(ContigID)
 		write_delim(EUKs_ContigID, paste0(out_folder, results_filename, ".EUK_NA_contigsIDs_KmerMajority_min",kmer_minLength,"bp_CAT_min",refdb_minLength,"bp.txt"), col_names = FALSE)
 	} else if (tolower(include_na) == "false") {
 		EUKs_ContigID <- contigs_class %>% filter(MajorityKmer_CAT_class == "EUK") %>% select(ContigID)
