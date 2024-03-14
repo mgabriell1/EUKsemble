@@ -71,15 +71,14 @@ if [ ${DB_CLASSIFIER,,} == "cat" ]; then
 	
 	conda activate $CAT_ENV
 	if [ ! -f $CATRESULTS_FOLDER"/"$CATRESULTS_FILENAME".contig2classification.official_names.txt" ]; then
-		CAT contigs -c $FOLDER"/"$RESULTS_FOLDER"/"$DATA"_min"$MINSIZE_CONTIGS_DBCLASS"bp"$FILE_EXT \
+		$CAT_EXEC contigs -c $FOLDER"/"$RESULTS_FOLDER"/"$DATA"_min"$MINSIZE_CONTIGS_DBCLASS"bp"$FILE_EXT \
 			-d $CAT_DB \
 			-t $CAT_TAXONOMY \
 			-n $THREADS \
-			--path_to_diamond $CAT_DIAMOND_PATH \
-			--index_chunks 1 --verbose \
+			--index_chunks 1 --verbose $CAT_EXTRAPARAMS \
 			--out_prefix $CATRESULTS_FOLDER"/"$CATRESULTS_FILENAME
 			
-		CAT add_names -i $CATRESULTS_FOLDER"/"$CATRESULTS_FILENAME".contig2classification.txt" \
+		$CAT_EXEC add_names -i $CATRESULTS_FOLDER"/"$CATRESULTS_FILENAME".contig2classification.txt" \
 			-t $CAT_TAXONOMY \
 			--only_official \
 			-o $CATRESULTS_FOLDER"/"$CATRESULTS_FILENAME".contig2classification.official_names.txt"
@@ -121,20 +120,28 @@ fi
     
 printf "===============================================\n"
 
-conda activate $DEEPMICROBEFINDER_ENV #Definition from DeepMicrobeFinder github
+conda activate $DEEPMICROCLASS_ENV #Definition from DeepMicroClass github
 
-printf "DeepMicrobeFinder classification \n"
-if [ ! -f $FOLDER"/"$RESULTS_FOLDER"/deepmicrobefinder-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp/"$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT"_pred_one-hot_hybrid.class.txt" ]; then
-    python $DEEPMICROBEFINDER_FOLDER"/predict.py" \
-        -i $FOLDER"/"$RESULTS_FOLDER"/"$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT  \
-        -e one-hot \
-        -d $DEEPMICROBEFINDER_FOLDER"/models/one-hot-models/" \
-        -m hybrid \
-        -o $FOLDER"/"$RESULTS_FOLDER"/deepmicrobefinder-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp"
+printf "DeepMicroClass classification \n"
+if [ ! -f $FOLDER"/"$RESULTS_FOLDER"/deepmicroclass-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp/"$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT"_pred_onehot_hybrid.class.tsv" ]; then
+	if [ ${REMOTE_MODEL} == "TRUE" ]; then
+	    DeepMicroClass predict \
+	        -i $FOLDER"/"$RESULTS_FOLDER"/"$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT  \
+	        -e onehot \
+	        -md hybrid \
+	        -o $FOLDER"/"$RESULTS_FOLDER"/deepmicroclass-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp"
+	else 
+		DeepMicroClass predict \
+			-i $FOLDER"/"$RESULTS_FOLDER"/"$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT  \
+	        -e onehot \
+	        -md hybrid \
+	        -m $LOCAL_MODEL_LOC \
+	        -o $FOLDER"/"$RESULTS_FOLDER"/deepmicroclass-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp"
+	fi
         
-    $RSCRIPT_PATH $EUKSEMBLE_INSTALLATION_FOLDER"/Scripts/DeepMicrobeFinder_predictionAssignment_extInput.R" $FOLDER"/"$RESULTS_FOLDER"/deepmicrobefinder-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp" $DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT"_pred_one-hot_hybrid.txt"
+    $RSCRIPT_PATH $EUKSEMBLE_INSTALLATION_FOLDER"/Scripts/DeepMicroClass_predictionAssignment_extInput.R" $FOLDER"/"$RESULTS_FOLDER"/deepmicroclass-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp" $DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT"_pred_onehot_hybrid.tsv"
 else
-    printf "DeepMicrobeFinder classification already present. Skipped \n"
+    printf "DeepMicroClass classification already present. Skipped \n"
 fi
 
 printf "===============================================\n"
@@ -158,7 +165,7 @@ $RSCRIPT_PATH $EUKSEMBLE_INSTALLATION_FOLDER"/Scripts/Majority_classification_ex
     $FOLDER"/"$RESULTS_FOLDER"/"$DATA"_min"$MINSIZE_CONTIGS_DBCLASS"bp_contigsIDs.txt" \
     $FOLDER"/"$RESULTS_FOLDER"/whokaryote-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp/featuretable_predictions_T.tsv" \
     $FOLDER"/"$RESULTS_FOLDER"/tiara-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp/tiara-out_classification.txt" \
-    $FOLDER"/"$RESULTS_FOLDER"/deepmicrobefinder-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp/"$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT"_pred_one-hot_hybrid.class.txt" \
+    $FOLDER"/"$RESULTS_FOLDER"/deepmicroclass-results_min"$MINSIZE_CONTIGS_KMERCLASS"bp/"$DATA"_min"$MINSIZE_CONTIGS_KMERCLASS"bp"$FILE_EXT"_pred_onehot_hybrid.class.tsv" \
     $KAIJURESULTS_FOLDER"/"$KAIJURESULTS_FILENAME".taxa"$KAIJURESULTS_EXT \
     $CATRESULTS_FOLDER"/"$CATRESULTS_FILENAME".contig2classification.official_names.txt"\
     $FOLDER"/"$RESULTS_FOLDER"/" \

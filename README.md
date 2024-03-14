@@ -10,23 +10,23 @@ A schematic representation of the steps followed by EUKsemble is present below.
 
 ## Requirements
 The following dependencies environments are required (the user can specify the name of a conda environment name for each tool):
-- Seqkit (https://bioinf.shenwei.me/seqkit/)
-- Tiara (https://github.com/ibe-uw/tiara/blob/main/docs/detailed-installation.md#detailed-installation) 
-- Whokaryote (https://github.com/LottePronk/whokaryote#installation)
-- DeepMicrobeFinder (https://github.com/chengsly/DeepMicrobeFinder#installation)
+- Seqkit v2.5.1 (https://bioinf.shenwei.me/seqkit/)
+- Tiara v1.0.3 (https://github.com/ibe-uw/tiara/blob/main/docs/detailed-installation.md#detailed-installation) 
+- Whokaryote v1.1.2 (https://github.com/LottePronk/whokaryote#installation)
+- DeepMicroClass v1.0.2 (https://github.com/chengsly/DeepMicroClass, new implementation of DeepMicrobeFinder)
 - R
 
 And depending on which reference-based classifier is chosen:
-- Kaiju (https://github.com/bioinformatics-centre/kaiju, either locally or using the webserver results)
-- CAT (https://github.com/dutilh/CAT#installation)
+- Kaiju v1.10.1 (https://github.com/bioinformatics-centre/kaiju, either locally or using the webserver results)
+- CAT v6.0.1 (https://github.com/MGXlab/CAT_pack#installation)
+Bear in mind to take care of setting up the databases as indicated in the respective installation manuals.
 
 The R scripts used will automatically install (if not present) the packages used:
   - readr
   - dplyr
   - tidyr
   - Taxonomizr (only if Kaiju predictions are performed on the webserver)
-
-Beware that Taxonomizr will require to download a large database on its first usage
+Beware that Taxonomizr will require to download a large database on its first usage.
 
 ## Important parameters and usage 
 ### Most important parameters
@@ -61,9 +61,9 @@ For a normal usage the final result is included in the column `MajorityKmer_{kai
 
 
 ## Citation
-Identifying eukaryotes in drinking water metagenomes and factors influencing their biogeography. 
-Marco Gabrielli, Zihan Dai, Vincent Delafont, Peer Timmers, Paul van der Wielen, Manuela Antonelli, Ameet Pinto.
-bioRxiv 2022.11.29.518372. DOI: https://doi.org/10.1101/2022.11.29.518372 
+Identifying eukaryotes and factors influencing their biogeography in drinking water metagenomes.
+Gabrielli M., Dai Z., Delafont V., Timmers P.H.A., van der Wielen P.W.J.J., Antonelli M., Pinto A.J. 
+Environmental Science & Technology, 2023, 57, 9, 3645–3660. DOI: https://doi.org/10.1021/acs.est.2c09010
 
 
 Also: do not forget to cite the software that made this pipeline possible (look at the requirements).

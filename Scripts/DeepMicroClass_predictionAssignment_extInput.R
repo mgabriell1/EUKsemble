@@ -28,4 +28,4 @@ contigs <- contigs %>%
 
 filename_class <- substr(filename,1,nchar(filename)-4)
 
-write_delim(contigs, paste0(filename_class,".class.txt"), delim = "\t")
+write_delim(contigs, paste0(filename_class,".class.tsv"), delim = "\t")
